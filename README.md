@@ -10,7 +10,7 @@ Built for the Abrigo Product Builder (UX) take-home exercise. Vite + React, clie
 
 1. **Composer** — the borrower jots rough notes in their own words
 2. **Here's what I understood** — the AI helper reflects the notes back as grounded bullets, plus one optional question about the unconfirmed amount
-3. **Amount marked approximate** — the borrower chooses to note the amount is an estimate; a preview chip shows exactly how it will read
+3. **Estimate range choice** — the borrower decides whether the $8,000–$9,000 estimate appears in the message; a preview chip shows exactly how it will read
 4. **Draft** — an editable draft built only from the borrower's words, with the uncertainty preserved
 5. **Send confirmation** — a compact modal with the final message; nothing is sent until the borrower taps "Send to banker"
 6. **Sent** — a simple confirmation with no approval implication; the banker can reply in-thread

@@ -23,12 +23,19 @@ const THINK_MS = 700
 
 // Mock of the AI drafting step. The draft is assembled only from the
 // borrower's own facts, and the amount always stays approximate.
+// 'include' (and skipping the question) keeps the estimate range with a
+// not-final note; 'omit' leaves the amount out entirely.
 function buildDraft(amountChoice) {
-  const uncertaintyNote =
-    amountChoice === 'approximate' ? ', so the exact amount may change' : ''
+  if (amountChoice === 'omit') {
+    return (
+      "Hi Jordan, I'm looking into a loan to help repair my car, which I rely on to get to work. " +
+      "I'm still waiting on the final repair quote, so I don't have an exact amount yet. " +
+      "I'd like to understand what options may be available."
+    )
+  }
   return (
     "Hi Jordan, I'm looking into a loan to help repair my car, which I rely on to get to work. " +
-    `I have an initial estimate of about $8,000–$9,000, but I'm still waiting on the final quote${uncertaintyNote}. ` +
+    "I have an initial estimate of about $8,000–$9,000, but I'm still waiting on the final quote, so the exact amount may change. " +
     "I'd like to understand what options may be available."
   )
 }
@@ -44,7 +51,7 @@ export default function App() {
   // compose | clarify | draft | sent
   const [step, setStep] = useState('compose')
   const [notes, setNotes] = useState(SAMPLE_NOTES)
-  // null | 'approximate' | 'exact'
+  // null | 'include' | 'omit'
   const [amountChoice, setAmountChoice] = useState(null)
   const [draft, setDraft] = useState('')
   const [reviewOpen, setReviewOpen] = useState(false)
@@ -222,25 +229,28 @@ export default function App() {
 
             <fieldset className="question">
               <legend>
-                One optional thing — the amount isn't final. Want me to note
-                that?
+                One optional thing — should the estimate range appear in the
+                message?
               </legend>
               <div className="radio-group">
                 <label
                   className={`radio ${
-                    amountChoice === 'approximate' ? 'checked' : ''
+                    amountChoice === 'include' ? 'checked' : ''
                   }`}
                 >
                   <input
                     type="radio"
                     name="amount"
-                    value="approximate"
-                    checked={amountChoice === 'approximate'}
-                    onChange={() => setAmountChoice('approximate')}
+                    value="include"
+                    checked={amountChoice === 'include'}
+                    onChange={() => setAmountChoice('include')}
                   />
-                  <span>Note that the amount is approximate</span>
+                  <span>
+                    Include the $8,000–$9,000 estimate and note that it isn't
+                    final
+                  </span>
                 </label>
-                {amountChoice === 'approximate' && (
+                {amountChoice === 'include' && (
                   <p className="chip">
                     Will read: "about $8,000–$9,000, still waiting on the final
                     quote"
@@ -248,17 +258,17 @@ export default function App() {
                 )}
                 <label
                   className={`radio ${
-                    amountChoice === 'exact' ? 'checked' : ''
+                    amountChoice === 'omit' ? 'checked' : ''
                   }`}
                 >
                   <input
                     type="radio"
                     name="amount"
-                    value="exact"
-                    checked={amountChoice === 'exact'}
-                    onChange={() => setAmountChoice('exact')}
+                    value="omit"
+                    checked={amountChoice === 'omit'}
+                    onChange={() => setAmountChoice('omit')}
                   />
-                  <span>I'll give an exact amount</span>
+                  <span>Leave the amount out for now</span>
                 </label>
               </div>
             </fieldset>
