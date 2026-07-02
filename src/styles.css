@@ -560,6 +560,14 @@ button:focus-visible,
   animation: fade-in 0.18s ease;
 }
 
+@media (min-width: 721px) {
+  .overlay {
+    /* offset by the sidebar width so the dialog centers over the flow,
+       not the full viewport */
+    padding-left: 232px;
+  }
+}
+
 .modal {
   width: 100%;
   max-width: 360px;

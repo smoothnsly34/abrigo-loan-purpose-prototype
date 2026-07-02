@@ -300,29 +300,17 @@ export default function App() {
                   </button>
                 </>
               ) : (
-                <>
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => setAmountChoice(null)}
-                    disabled={busy}
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() => startDraft(amountChoice)}
-                    disabled={busy}
-                    aria-busy={busy}
-                  >
-                    {busy ? (
-                      <span className="spinner" aria-hidden="true" />
-                    ) : null}
-                    Draft my message
-                    {!busy && <IconArrowRight size={16} />}
-                  </button>
-                </>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => startDraft(amountChoice)}
+                  disabled={busy}
+                  aria-busy={busy}
+                >
+                  {busy ? <span className="spinner" aria-hidden="true" /> : null}
+                  Draft my message
+                  {!busy && <IconArrowRight size={16} />}
+                </button>
               )}
             </div>
           </section>
