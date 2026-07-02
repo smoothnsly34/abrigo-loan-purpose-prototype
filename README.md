@@ -4,7 +4,7 @@ A lightweight UX prototype of an AI-assisted flow that helps a borrower turn rou
 
 Built for the Abrigo Product Builder (UX) take-home exercise. Vite + React, client-only — no backend, no real AI call, and nothing is actually sent.
 
-**Live demo:** _(deploy link pending)_
+**Live demo:** https://abrigo-loan-purpose-prototype.vercel.app
 
 ## The flow — 6 states
 
