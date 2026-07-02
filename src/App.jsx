@@ -88,9 +88,49 @@ export default function App() {
   }
 
   return (
-    <div className="page">
-      <main className="card">
-        <BankerHeader />
+    <div className="shell">
+      <header className="sk-nav" aria-hidden="true">
+        <span className="sk sk-logo" />
+        <span className="sk sk-nav-item" />
+        <span className="sk sk-nav-item" style={{ width: 72 }} />
+        <span className="sk sk-nav-item" style={{ width: 48 }} />
+        <span className="sk-spacer" />
+        <span className="sk sk-avatar" />
+      </header>
+
+      <div className="shell-body">
+        <aside className="sk-side" aria-hidden="true">
+          {['72%', '54%', '66%', '48%'].map((w) => (
+            <span className="sk" style={{ width: w }} key={`a-${w}`} />
+          ))}
+          <span className="sk-side-gap" />
+          {['60%', '70%', '44%'].map((w) => (
+            <span className="sk" style={{ width: w }} key={`b-${w}`} />
+          ))}
+        </aside>
+
+        <div className="stage">
+          <div className="sk-page" aria-hidden="true">
+            <div className="sk-page-head">
+              <span className="sk sk-title" />
+              <span className="sk sk-action" />
+            </div>
+            <div className="sk-cols">
+              <div className="sk-panel">
+                {['56%', '84%', '72%', '64%'].map((w) => (
+                  <span className="sk" style={{ width: w }} key={w} />
+                ))}
+              </div>
+              <div className="sk-panel">
+                {['78%', '52%', '88%', '60%'].map((w) => (
+                  <span className="sk" style={{ width: w }} key={w} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <main className="card">
+            <BankerHeader />
 
         {step === 'compose' && (
           <section className="step" key="compose">
@@ -333,11 +373,13 @@ export default function App() {
             </div>
           </section>
         )}
-      </main>
+          </main>
 
-      <p className="demo-note">
-        Demo prototype — messages aren't actually sent or stored.
-      </p>
+          <p className="demo-note">
+            Demo prototype — messages aren't actually sent or stored.
+          </p>
+        </div>
+      </div>
 
       {reviewOpen && (
         <ReviewModal

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { IconInfo } from './Icons.jsx'
 
 export default function ReviewModal({ draft, onClose, onSend }) {
   const dialogRef = useRef(null)
@@ -64,24 +63,23 @@ export default function ReviewModal({ draft, onClose, onSend }) {
         ref={dialogRef}
       >
         <h2 id="review-title" className="modal-heading">
-          Review your message
+          Send this message?
         </h2>
-        <p id="review-sub" className="step-sub">
-          This is exactly what Jordan will see.
+        <p id="review-sub" className="modal-sub">
+          This is the message Jordan will receive. Nothing is sent until you
+          tap Send to banker.
         </p>
-        <p className="field-label">To</p>
-        <p className="to-line">Jordan Lee · your banker</p>
+        <p className="to-compact">
+          <span className="to-label">To</span>
+          Jordan Lee · your banker
+        </p>
         <div className="panel message-preview">{draft}</div>
-        <p className="hint icon-hint send-hint">
-          <IconInfo size={15} />
-          <span>Nothing's sent until you tap Send to banker.</span>
-        </p>
-        <div className="btn-row">
-          <button type="button" className="btn btn-primary" onClick={onSend}>
-            Send to banker
-          </button>
+        <div className="modal-actions">
           <button type="button" className="btn btn-secondary" onClick={onClose}>
             Back to edit
+          </button>
+          <button type="button" className="btn btn-primary" onClick={onSend}>
+            Send to banker
           </button>
         </div>
       </div>

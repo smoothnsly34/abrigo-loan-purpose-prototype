@@ -26,13 +26,137 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.page {
+.shell {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.shell-body {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: clamp(24px, 7vh, 72px) 16px 32px;
   gap: 12px;
+  padding: clamp(20px, 6vh, 56px) 16px 32px;
+  overflow: hidden;
+}
+
+.card,
+.demo-note {
+  position: relative;
+  z-index: 1;
+}
+
+/* Skeleton app chrome — decorative context only, nothing legible */
+
+.sk {
+  display: block;
+  height: 10px;
+  border-radius: 5px;
+  background: #e2e8f1;
+}
+
+.sk-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 54px;
+  padding: 0 20px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  flex: none;
+}
+
+.sk-logo {
+  width: 92px;
+  height: 18px;
+  background: #d3dbe8;
+}
+
+.sk-nav-item {
+  width: 56px;
+}
+
+.sk-spacer {
+  flex: 1;
+}
+
+.sk-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.sk-side {
+  width: 212px;
+  flex: none;
+  background: #fff;
+  border-right: 1px solid var(--border);
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sk-side-gap {
+  height: 14px;
+  flex: none;
+}
+
+.sk-page {
+  position: absolute;
+  inset: 0;
+  padding: 26px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  pointer-events: none;
+}
+
+.sk-page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sk-title {
+  width: 180px;
+  height: 16px;
+}
+
+.sk-action {
+  width: 100px;
+  height: 34px;
+  border-radius: 8px;
+}
+
+.sk-cols {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  min-height: 0;
+}
+
+.sk-panel {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid #e4e9f1;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .card {
@@ -438,10 +562,10 @@ button:focus-visible,
 
 .modal {
   width: 100%;
-  max-width: 400px;
+  max-width: 360px;
   background: #fff;
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 14px;
+  padding: 18px;
   box-shadow: 0 24px 60px rgba(10, 20, 40, 0.25);
   animation: rise 0.22s ease;
 }
@@ -451,20 +575,30 @@ button:focus-visible,
 }
 
 .modal-heading {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 650;
   color: var(--ink);
-  margin: 0 0 4px;
+  margin: 0 0 6px;
 }
 
-.modal .step-sub {
-  margin-bottom: 12px;
-}
-
-.to-line {
-  font-size: 14px;
-  color: var(--text);
+.modal-sub {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.5;
   margin: 0 0 12px;
+}
+
+.to-compact {
+  font-size: 13px;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.to-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--faint);
+  margin-right: 6px;
 }
 
 .message-preview {
@@ -472,8 +606,24 @@ button:focus-visible,
   white-space: pre-wrap;
 }
 
-.send-hint {
-  margin-top: 10px;
+.modal .message-preview {
+  font-size: 13px;
+  line-height: 1.55;
+  padding: 10px 12px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.modal-actions .btn {
+  flex: 1;
+  min-height: 42px;
+  font-size: 14px;
 }
 
 /* Sent */
@@ -575,8 +725,17 @@ button:focus-visible,
   }
 }
 
+@media (max-width: 720px) {
+  .sk-side {
+    display: none;
+  }
+  .sk-page {
+    padding: 18px 16px;
+  }
+}
+
 @media (max-width: 480px) {
-  .page {
+  .stage {
     padding: 16px 10px 24px;
   }
   .card {
