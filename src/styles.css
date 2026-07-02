@@ -275,6 +275,25 @@ textarea {
   min-height: 172px;
 }
 
+textarea::placeholder {
+  color: var(--faint);
+  opacity: 1;
+}
+
+.ai-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.assist-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--faint);
+  margin: 0;
+}
+
 textarea:focus {
   outline: none;
   border-color: #3565b4;

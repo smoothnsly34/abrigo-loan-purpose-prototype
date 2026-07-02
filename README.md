@@ -20,7 +20,7 @@ Built for the Abrigo Product Builder (UX) take-home exercise. Vite + React, clie
 - **Uncertainty survives the flow.** The estimate stays an approximate range ("about $8,000–$9,000") end to end — the AI never hardens it into a confirmed amount.
 - **The AI only organizes.** It reflects the borrower's own words, asks one optional question, and never adds details.
 - **The user owns the message.** The draft is fully editable, the review modal shows the exact final text, and sending is always an explicit user action.
-- A non-AI path (sending your own words as-is) belongs in the full product; it's intentionally outside this prototype's single happy path.
+- **A non-AI path is one tap away.** "Review & send as written" skips the AI steps entirely and takes the borrower's original note into the same send confirmation.
 
 ## What's mocked
 

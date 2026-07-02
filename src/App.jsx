@@ -12,6 +12,9 @@ import {
 const SAMPLE_NOTES =
   "My car needs repairs and I need it to drive to work. I got a mechanic estimate for around $8,000 or $9,000 but I'm waiting on the final estimate. I'm not sure exactly what to ask for yet."
 
+const NOTES_PLACEHOLDER =
+  'For this prototype, tap to load a sample note — then try AI writing help.'
+
 const UNDERSTOOD = [
   'A loan for car repairs, so you can keep getting to work',
   "Your mechanic's estimate is around $8,000–$9,000",
@@ -50,7 +53,7 @@ function excerpt(text, max = 64) {
 export default function App() {
   // compose | clarify | draft | sent
   const [step, setStep] = useState('compose')
-  const [notes, setNotes] = useState(SAMPLE_NOTES)
+  const [notes, setNotes] = useState('')
   // null | 'include' | 'omit'
   const [amountChoice, setAmountChoice] = useState(null)
   const [draft, setDraft] = useState('')
@@ -59,6 +62,7 @@ export default function App() {
 
   const headingRef = useRef(null)
   const mountedRef = useRef(false)
+  const seededRef = useRef(false)
 
   // Move focus to the step heading on each transition so keyboard and
   // screen-reader users land on the new content.
@@ -81,6 +85,22 @@ export default function App() {
 
   const startClarify = () => simulate(() => setStep('clarify'))
 
+  // Demo affordance: first focus on the empty notes field loads the
+  // prepared sample note.
+  function seedNotes() {
+    if (!seededRef.current && !notes.trim()) {
+      seededRef.current = true
+      setNotes(SAMPLE_NOTES)
+    }
+  }
+
+  // Non-AI path: the original note goes straight to the send
+  // confirmation, skipping the reflection and draft steps.
+  function reviewAsWritten() {
+    setDraft(notes)
+    setReviewOpen(true)
+  }
+
   const startDraft = (choice) =>
     simulate(() => {
       setDraft(buildDraft(choice))
@@ -89,9 +109,10 @@ export default function App() {
 
   function resetAll() {
     setStep('compose')
-    setNotes(SAMPLE_NOTES)
+    setNotes('')
     setAmountChoice(null)
     setDraft('')
+    seededRef.current = false
   }
 
   return (
@@ -155,6 +176,8 @@ export default function App() {
               id="notes"
               rows={6}
               value={notes}
+              placeholder={NOTES_PLACEHOLDER}
+              onFocus={seedNotes}
               onChange={(e) => setNotes(e.target.value)}
             />
             <p className="hint icon-hint privacy-hint">
@@ -165,24 +188,41 @@ export default function App() {
               </span>
             </p>
             <div className="btn-row">
+              <div
+                className="ai-group"
+                role="group"
+                aria-labelledby="ai-help-label"
+              >
+                <p className="assist-label" id="ai-help-label">
+                  AI writing help
+                </p>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={startClarify}
+                  disabled={busy || !notes.trim()}
+                  aria-busy={busy}
+                >
+                  {busy ? (
+                    <span className="spinner" aria-hidden="true" />
+                  ) : (
+                    <IconSparkles size={17} />
+                  )}
+                  Help me make this clear
+                </button>
+                <p className="hint">
+                  I only organize what you write. I don't add details, and
+                  nothing is sent unless you choose to send it.
+                </p>
+              </div>
               <button
                 type="button"
-                className="btn btn-primary"
-                onClick={startClarify}
+                className="btn btn-secondary"
+                onClick={reviewAsWritten}
                 disabled={busy || !notes.trim()}
-                aria-busy={busy}
               >
-                {busy ? (
-                  <span className="spinner" aria-hidden="true" />
-                ) : (
-                  <IconSparkles size={17} />
-                )}
-                Help me make this clear
+                Review &amp; send as written
               </button>
-              <p className="hint">
-                I only organize what you write. I don't add details, and
-                nothing is sent unless you choose to send it.
-              </p>
             </div>
           </section>
         )}
